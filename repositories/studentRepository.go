@@ -10,7 +10,7 @@ func GetAllStudents(students *[]models.Student) {
 }
 
 func GetStudentById(id int, student *models.Student) {
-	database.DB.Find(student, id)
+	database.DB.First(student, id)
 }
 
 func CreateStudent(student *models.Student) {

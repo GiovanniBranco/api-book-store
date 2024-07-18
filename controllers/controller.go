@@ -19,7 +19,7 @@ func GetAllStudents(c *gin.Context) {
 
 func GetStudentById(c *gin.Context) {
 
-	id, err := strconv.Atoi(c.Param(":id"))
+	id, err := strconv.Atoi(c.Params.ByName("id"))
 
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -32,6 +32,14 @@ func GetStudentById(c *gin.Context) {
 	var student models.Student
 
 	repositories.GetStudentById(id, &student)
+
+	if student.ID == 0 {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error": "Student not found",
+		})
+
+		return
+	}
 
 	c.JSON(http.StatusOK, student)
 
