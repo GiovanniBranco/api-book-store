@@ -1,18 +1,12 @@
 package main
 
-import "github.com/gin-gonic/gin"
-
-func GetAllStudents(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"id":   1,
-		"name": "John Doe",
-	})
-}
+import (
+	"github.com/GiovanniBranco/classroom-api/database"
+	"github.com/GiovanniBranco/classroom-api/routes"
+)
 
 func main() {
-	r := gin.Default()
+	database.ConnectDatabase()
 
-	r.GET("/students", GetAllStudents)
-	addr := "127.0.0.1:8080/api"
-	r.Run(addr)
+	routes.HandleRequests()
 }
