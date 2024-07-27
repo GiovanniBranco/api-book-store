@@ -84,6 +84,9 @@ func CreateStudent(c *gin.Context) {
 	err := c.ShouldBindBodyWithJSON(&student)
 
 	if err != nil {
+
+	}
+	if err := student.ValidateStudentData(); err != nil {
 		c.JSON(400, gin.H{
 			"error": err.Error(),
 		})
