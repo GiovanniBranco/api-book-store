@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -97,8 +96,6 @@ func TestUpdateStudent(t *testing.T) {
 	studentUpdated := models.Student{Name: "Nome do Aluno Teste", Cpf: "47123456789"}
 
 	payload, _ := json.Marshal(studentUpdated)
-
-	fmt.Println("Payload: ", payload)
 
 	req, _ := http.NewRequest("PUT", "/api/students/1", bytes.NewBuffer(payload))
 	res := httptest.NewRecorder()
