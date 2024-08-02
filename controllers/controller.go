@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -84,8 +85,13 @@ func CreateStudent(c *gin.Context) {
 	err := c.ShouldBindBodyWithJSON(&student)
 
 	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
 
+		return
 	}
+	
 	if err := student.ValidateStudentData(); err != nil {
 		c.JSON(400, gin.H{
 			"error": err.Error(),
@@ -109,6 +115,8 @@ func UpdateStudent(c *gin.Context) {
 	var student models.Student
 	repositories.GetStudentById(id, &student)
 
+	fmt.Println("student - 1", student)
+
 	err := c.ShouldBindBodyWithJSON(&student)
 
 	if err != nil {
@@ -117,6 +125,7 @@ func UpdateStudent(c *gin.Context) {
 		})
 	}
 
+	fmt.Println("student - 2", student)
 	repositories.UpdateStudent(&student)
 
 	c.Status(http.StatusNoContent)
